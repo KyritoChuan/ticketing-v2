@@ -1,0 +1,49 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: production-rabbitmqcluster
+spec:
+  replicas: 3
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 1
+      memory: 2Gi
+  rabbitmq:
+          additionalConfig: |
+                  log.console.level = info
+                  channel_max = 700
+                  default_user= guest 
+                  default_pass = guest
+                  default_user_tags.administrator = true
+  service:
+    type: ClusterIP
+
+
+# ---
+# apiVersion: rabbitmq.com/v1beta1
+# kind: RabbitmqCluster
+# metadata:
+#   name: rabbitmqcluster
+# spec:
+#   image: rabbitmq:3.8.9-management
+#   replicas: 3
+#   service:
+#     type: LoadBalancer # ClusterIP | LoadBalancer
+#   resources:
+#     requests:
+#       # cpu: 3000m
+#       memory: 512Mi
+#     # limits:
+#     #   cpu: 1000m
+#     #   memory: 2Gi
+#   rabbitmq:
+#     additionalPlugins:
+#       - rabbitmq_top
+#       - rabbitmq_shovel
+#   # tls:
+#   #   secretName: rabbitmq-server-certs
+#   #   caSecretName: rabbitmq-ca-cert
+#   #   caCertName: ca.crt

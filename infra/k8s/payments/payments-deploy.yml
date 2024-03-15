@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payments-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payments
+  template:
+    metadata:
+      labels:
+        app: payments
+    spec:
+      containers:
+        - name: payments
+          image: adriantepes/paymentsv2
+          env:
+            - name: PAYMENTS_HOST
+              value: "0.0.0.0"
+            - name: PAYMENTS_PORT
+              value: "3000"
+            - name: DB_HOST
+              value: payments-postgres-srv
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_USER
+              value: admin                            
+            - name: DB_PASSWORD
+              value: paymentadmin
+            - name: DB_DATABASE
+              value: payments
+            - name: DB_SYNC
+              value: "true"
+            - name: RABBIT_HOST
+              value: production-rabbitmqcluster
+            - name: RABBIT_PORT
+              value: "5672"
+            - name: RABBIT_USERNAME
+              value: guest
+            - name: RABBIT_PASSWORD
+              value: guest
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: payments-srv
+spec:
+  selector:
+    app: payments
+  ports:
+    - name: payments
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

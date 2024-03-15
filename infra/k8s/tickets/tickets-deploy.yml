@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tickets-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tickets
+  template:
+    metadata:
+      labels:
+        app: tickets
+    spec:
+      containers:
+        - name: tickets
+          image: adriantepes/ticketsv2
+          env:
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_HOST
+              value: tickets-postgres-srv
+            - name: DB_USER
+              value: admin
+            - name: DB_PASSWORD
+              value: ticketadmin
+            - name: DB_DATABASE
+              value: ticketing
+            - name: DB_SYNC
+              value: "true"
+            - name: TICKET_HOST
+              value: "0.0.0.0"
+            - name: TICKET_PORT
+              value: "3000"
+            - name: RABBIT_HOST
+              value: production-rabbitmqcluster
+            - name: RABBIT_PORT
+              value: "5672"
+            - name: RABBIT_USERNAME
+              value: guest
+            - name: RABBIT_PASSWORD
+              value: guest
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: tickets-srv
+spec:
+  selector:
+    app: tickets
+  ports:
+    - name: tickets
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

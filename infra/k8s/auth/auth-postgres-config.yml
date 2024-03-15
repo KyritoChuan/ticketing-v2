@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auth-postgres-config
+  labels:
+    app: auth-postgres
+data:
+  POSTGRES_DB: authentication
+  POSTGRES_USER: admin
+  POSTGRES_PASSWORD: authadmin

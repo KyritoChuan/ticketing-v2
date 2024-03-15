@@ -1,0 +1,1 @@
+export { RequestCreatePaymentDTO } from './requests/requestCreatePayment.dto';

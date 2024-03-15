@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tickets-postgres-config
+  labels:
+    app: tickets-postgres
+data:
+  POSTGRES_DB: ticketing
+  POSTGRES_USER: admin
+  POSTGRES_PASSWORD: ticketadmin

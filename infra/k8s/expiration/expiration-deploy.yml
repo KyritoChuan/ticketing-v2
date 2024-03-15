@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: expiration-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: expiration
+  template:
+    metadata:
+      labels:
+        app: expiration
+    spec:
+      containers:
+        - name: expiration
+          image: adriantepes/expirationv2
+          env:
+            - name: EXPIRATION_HOST
+              value: "0.0.0.0"
+            - name: EXPIRATION_PORT
+              value: "3000"
+            - name: REDIS_HOST
+              value: expiration-redis-srv
+            - name: REDIS_PORT
+              value: "6379"
+            - name: REDIS_PASSWORD
+              value: mypassword
+            - name: RABBIT_HOST
+              value: production-rabbitmqcluster
+            - name: RABBIT_PORT
+              value: "5672"
+            - name: RABBIT_USERNAME
+              value: guest
+            - name: RABBIT_PASSWORD
+              value: guest
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: expiration-srv
+spec:
+  selector:
+    app: expiration
+  ports:
+    - name: expiration
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: orders-postgres-config
+  labels:
+    app: orders-postgres
+data:
+  POSTGRES_DB: orders
+  POSTGRES_USER: admin
+  POSTGRES_PASSWORD: orderadmin
