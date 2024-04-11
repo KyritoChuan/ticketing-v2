@@ -16,3 +16,12 @@ Las tecnologías ocupadas en este proyecto fueron:
 * Redis
 * Docker
 * Kubernetes
+
+Antes de ejecutar el proyecto, es necesario instalar el Ingress-Nginx en su Cluster de Kubernetes:
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.0/deploy/static/provider/cloud/deploy.yaml
+
+También es necesario instalar RabbitMQ en su Cluster de Kubernetes:
+kubectl apply -f https://github.com/rabbitmq/cluster-operator/releases/latest/download/cluster-operator.yml
+
+Una vez hecho esto, ejecutar el siguiente comando:
+skaffold dev
