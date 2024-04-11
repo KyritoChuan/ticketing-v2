@@ -26,5 +26,5 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/cont
 Por último, instalar RabbitMQ en su Cluster de Kubernetes:  
 kubectl apply -f https://github.com/rabbitmq/cluster-operator/releases/latest/download/cluster-operator.yml
 
-Una vez hecho esto, ejecutar el siguiente comando:  
+Una vez hecho esto, ejecutar el siguiente comando en la raíz del proyecto:  
 skaffold dev
